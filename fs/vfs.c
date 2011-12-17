@@ -42,7 +42,7 @@ static struct file_system_type *find_file_system_type(const char *name)
 {
 	struct file_system_type *p;
 
-	for (p = fs_type_head.next; p; p = p->next) 
+	for (p = fs_type_head.next; p; p = p->next)
 		if (!strcmp(p->name, name))
 			return p;
 
@@ -57,8 +57,8 @@ static struct file_system_type *find_file_system_type(const char *name)
  * @param name is mount point.
  * @param fs_name is file system name for the mount point.
  * @param driver is the driver for that device.
- */ 
-void set_mount_point(const char *name, const char *fs_name, struct blk_device_drivers *driver) 
+ */
+void set_mount_point(const char *name, const char *fs_name, struct blk_device_drivers *driver)
 {
 	root_fs.m_point = name;
 	root_fs.fs_name = fs_name;
@@ -89,7 +89,7 @@ void show_all_registered_file_systems(void)
 }
 
 /**
- * Read super block from required mount point. 
+ * Read super block from required mount point.
  * @param fs_name is file system name. such as ext2.
  * @param mount_point is mount point.
  * @return 0: succeeded. negative value: something wrong.
@@ -141,7 +141,7 @@ ssize_t vfs_read(const char *fname, char *buf, size_t num)
 		printk("%s file system hasn't been registered yet\n", "minix");
 		return -1;
 	}
-	
+
 	return fs_type->f_op->read(mpoint, fname, buf, num);
 
 }

@@ -5,7 +5,7 @@ CFLAGS += -I../../include -I.
 objs = pci.o
 
 all: $(objs)
-	
+
 .c.o:
 	$(CC) $(CFLAGS) $< -c
 

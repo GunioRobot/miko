@@ -4,10 +4,10 @@
  */
 #define ASM 1
 #include <mikoOS/multiboot.h>
-	
-.section .entry 
+
+.section .entry
 .code32
-	
+
 .globl _start
 _start:
 	jmp	entry

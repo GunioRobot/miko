@@ -4,7 +4,7 @@ LD = ld
 target = hello
 
 CFLAGS = -Wall -Wextra -fno-builtin -Os
-CFLAGS += -fno-common -nostdlib -nostdinc -nostartfiles -nodefaultlibs 
+CFLAGS += -fno-common -nostdlib -nostdinc -nostartfiles -nodefaultlibs
 CFLAGS += -m32
 CFLAGS += -mno-red-zone -ffreestanding -fno-stack-protector
 

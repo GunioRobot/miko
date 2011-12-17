@@ -5,7 +5,7 @@ CFLAGS += -I../../../include -I.
 objs = ata_hdd.o
 
 all: $(objs)
-	
+
 .c.o:
 	$(CC) $(CFLAGS) $< -c
 

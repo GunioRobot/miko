@@ -5,7 +5,7 @@ CFLAGS += -I../../include -I.
 objs = minixfs.o
 
 all: $(objs)
-	
+
 .c.o:
 	$(CC) $(CFLAGS) $< -c
 

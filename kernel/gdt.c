@@ -75,7 +75,7 @@ void setup_gdt(void)
  * @param limit limit.
  * @param type what type is this descriptor.
  */
-void set_gdt_values(u_int32_t index, u_int32_t base, 
+void set_gdt_values(u_int32_t index, u_int32_t base,
 		    u_int32_t limit, u_int8_t type)
 {
 	struct segment_descriptor *p = &gdt[index >> 3];
@@ -108,7 +108,7 @@ int search_unused_gdt_index(void)
 {
 	int i, idx;
 	for (i = 0, idx = gdt_count; i < GDT_TABLE_NUM; i++, idx++) {
-		if (i >= GDT_TABLE_NUM) 
+		if (i >= GDT_TABLE_NUM)
 			idx = 1;
 
 		if (gdt[idx].type == 0)

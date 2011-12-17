@@ -42,7 +42,7 @@ static inline void ltr(u_int16_t sel)
 {
 	__asm__ __volatile__ ("ltr %0\n\t" ::"m"(sel));
 }
- 
+
 struct tss_struct *set_tss(u_int16_t cs, u_int16_t ds,
 			   u_int32_t eip, u_int32_t eflags,
 			   u_int32_t esp, u_int16_t ss,
@@ -55,7 +55,7 @@ struct tss_struct *set_tss(u_int16_t cs, u_int16_t ds,
 //	p = kmalloc(sizeof(*p));
 	if (!p)
 		KERN_ABORT("kmalloc failed");
- 
+
 //	printk("cs:0x%x ds:0x%x ss:0x%x esp:0x%lx esp0:0x%lx ss0:0x%x\n", cs, ds, ss, esp, esp0, ss0);
 
 	p->cs = cs;
@@ -89,8 +89,8 @@ static void switch_task(u_int16_t sel)
 	tmp.a = 0;
 	tmp.b = sel;
 
-	__asm__ __volatile__ ("ljmp *%0\n\t" ::"m"(tmp)); 
-//	__asm__ __volatile__ ("lcall %0\n\t" ::"m"(tmp)); 
+	__asm__ __volatile__ ("ljmp *%0\n\t" ::"m"(tmp));
+//	__asm__ __volatile__ ("lcall %0\n\t" ::"m"(tmp));
 	return ;
 
 }
@@ -106,27 +106,27 @@ int setup_tss(unsigned char *data)
 	u_int32_t esp;
 
 	printk("Setup TSS\n");
- 
+
 	__asm__ __volatile__("movw %%cs, %0\n\t;"
 			     "movw %%ds, %1\n\t;"
 			     "movw %%ss, %2\n\t;"
 			     "movl %%esp, %3\n\t;"
 			     :"=g"(cs), "=g"(ds), "=g"(ss), "=g"(esp)
 		);
- 
+
 //	printk("cs:0x%x ds:0x%x ss:0x%x esp:0x%x\n", cs, ds, ss, esp);
 
  	set_tss(cs, ds, (u_int32_t) &test_task1, 0x202,
 		(u_int32_t) &process_stack[0], ss,
 		esp, ss);
-	
+
 	set_tss(cs, ds, (u_int32_t) data, 0x202,
 		(u_int32_t) &process_stack[1], ss,
 		esp, ss);
- 
-	
-	set_gdt_values(0x28, (u_int32_t) &tss[0], sizeof(struct tss_struct), SEG_TYPE_TSS); 
-	set_gdt_values(0x30, (u_int32_t) &tss[1], sizeof(struct tss_struct), SEG_TYPE_TSS); 
+
+
+	set_gdt_values(0x28, (u_int32_t) &tss[0], sizeof(struct tss_struct), SEG_TYPE_TSS);
+	set_gdt_values(0x30, (u_int32_t) &tss[1], sizeof(struct tss_struct), SEG_TYPE_TSS);
 
 	ltr(0x28);
 

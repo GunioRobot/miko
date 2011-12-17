@@ -4,7 +4,7 @@
 enum {
 	EXT2_BAD_INO = 1, // bad blocks inode
 	EXT2_ROOT_INO, // root directory inode
-	EXT2_ACL_IDX_INO, // ACL index inode 
+	EXT2_ACL_IDX_INO, // ACL index inode
 	EXT2_ACL_DATA_INO, // ACL data inode
 	EXT2_BOOT_LOADER_INO, // boot loader inode
 	EXT2_UNDEL_DIR_INO, // undelete directory inode

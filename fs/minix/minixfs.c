@@ -20,7 +20,7 @@ static int read_dentry(struct vfs_mount *vmount, struct minix_dentry *dentry, un
 static int read_inode(struct vfs_mount *vmount, u_int16_t inode_num, struct minix_inode *inode, unsigned long addr);
 static int count_delimita_length(const char *str, char c);
 static u_int16_t find_file(struct vfs_mount *vmount, struct minix_superblock *sb, unsigned long address, const char *fname);
-static ssize_t read_file(struct vfs_mount *vmount, struct minix_superblock *sb, 
+static ssize_t read_file(struct vfs_mount *vmount, struct minix_superblock *sb,
 			 const char *fname, char *buf, size_t num);
 
 static ssize_t minix_read(struct vfs_mount *vmount, const char *fname, char *buf, size_t num);
@@ -49,7 +49,7 @@ static struct file_system_type minix_fs_type = {
  * @param file name.
  * @param output buffer.
  * @param maximum read bytes
- * @result read bytes. 
+ * @result read bytes.
  */
 static ssize_t minix_read(struct vfs_mount *vmount, const char *fname, char *buf, size_t num)
 {
@@ -87,7 +87,7 @@ static int get_file_type(struct minix_inode *inode)
  * @param data zone.
  * @param 0 is success.
  */
-static int read_inode(struct vfs_mount *vmount, u_int16_t inode_num, 
+static int read_inode(struct vfs_mount *vmount, u_int16_t inode_num,
 		       struct minix_inode *inode, unsigned long addr)
 {
 	int ret;
@@ -97,7 +97,7 @@ static int read_inode(struct vfs_mount *vmount, u_int16_t inode_num,
 		return -1;
 
 	memcpy(inode, sblock.data + ((inode_num - 1) * sizeof(*inode)), sizeof(*inode));
-	
+
 	return 0;
 }
 
@@ -107,8 +107,8 @@ static int read_inode(struct vfs_mount *vmount, u_int16_t inode_num,
  * @param address of data zone.
  * @param offset from data zone.
  * @param 0 is success.
- */ 
-static int read_dentry(struct vfs_mount *vmount, struct minix_dentry *dentry, 
+ */
+static int read_dentry(struct vfs_mount *vmount, struct minix_dentry *dentry,
 			unsigned long address, unsigned long offset)
 {
 	int ret;
@@ -142,7 +142,7 @@ static int count_delimita_length(const char *str, char c)
 	}
 
 	return -1;
-	
+
 }
 
 /**
@@ -152,7 +152,7 @@ static int count_delimita_length(const char *str, char c)
  * @param Address of data zone.
  * @param file name.
  * @return if find a file, it returns inode number.
- */ 
+ */
 static u_int16_t find_file(struct vfs_mount *vmount, struct minix_superblock *sb, unsigned long address, const char *fname)
 {
 	unsigned long offset = 0;
@@ -161,28 +161,28 @@ static u_int16_t find_file(struct vfs_mount *vmount, struct minix_superblock *sb
 	unsigned long inode_tbl_bass = get_inode_table_address(*sb);
 	const char *tmp;
 	u_int16_t ret = 0;
-	
+
 	int result;
 	int len = 0;
 	int ftype;
 	while (1) {
 		// read first entry.
 		result = read_dentry(vmount, &dentry, address, offset);
-		if (result) 
+		if (result)
 			KERN_ABORT("read hdd error\n");
 
 		if (dentry.inode == 0)
 			break;
 
 		result = read_inode(vmount, dentry.inode, &inode, inode_tbl_bass);
-		if (result) 
+		if (result)
 			KERN_ABORT("read hdd error\n");
 
 		tmp = fname;
-		if (tmp[0] == '/') 
+		if (tmp[0] == '/')
 			tmp = tmp + 1;
 
-		ftype = get_file_type(&inode); 
+		ftype = get_file_type(&inode);
 		if (ftype == I_FT_DIR) {
 			len = count_delimita_length(tmp, '/');
 			if (len == -1) {
@@ -216,9 +216,9 @@ static u_int16_t find_file(struct vfs_mount *vmount, struct minix_superblock *sb
  * @param file name.
  * @param output buffer.
  * @param maximum read bytes
- * @result read bytes. 
+ * @result read bytes.
  */
-static ssize_t read_file(struct vfs_mount *vmount, struct minix_superblock *sb, 
+static ssize_t read_file(struct vfs_mount *vmount, struct minix_superblock *sb,
 			 const char *fname, char *buf, size_t num)
 {
 	u_int16_t ino;
@@ -254,7 +254,7 @@ static ssize_t read_file(struct vfs_mount *vmount, struct minix_superblock *sb,
  * Read minix file system's super block.
  * @param mount point.
  * @return 0 is success, negative numbers are fail.
- */ 
+ */
 static int minix_get_sb(struct vfs_mount *vmount)
 {
 	int ret;

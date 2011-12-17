@@ -19,4 +19,4 @@
 
 #endif // __ASSEMBLY__
 
-#endif // LINKAGE_H 
+#endif // LINKAGE_H

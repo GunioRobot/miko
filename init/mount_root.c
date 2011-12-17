@@ -24,13 +24,13 @@ int mount_root_fs(void)
 	}
 
 	set_mount_point("/", "minix", driver);
-	
+
 	read_super_block("minix", "/");
 
 	printk("rootfs mount finished\n");
 
 	ret = vfs_read("/dir_a/dir_b/foobar.txt", buf, sizeof(buf) - 1);
 	printk("/dir_a/dir_b/foobar.txt's size is %d bytes and data is %s", ret, buf);
- 
+
 	return 0;
 }

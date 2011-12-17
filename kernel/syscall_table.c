@@ -4,7 +4,7 @@
 
 struct syscall_table syscalls[NR_SYSCALLS] = {
 	{ sys_unused },
-	{ sys_exit }, 
+	{ sys_exit },
 	{ sys_fork } ,
 	{ sys_open } ,
 	{ sys_close },

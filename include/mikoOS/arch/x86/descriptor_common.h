@@ -51,7 +51,7 @@ struct gate_descriptor {
 	u_int16_t offsetH;
 } __attribute__((packed));
 
-/** 
+/**
  * This structure uses for descriptor table
  * e.g. gdt, interruput and etc.
  * This structure shouldn't have any padding space.

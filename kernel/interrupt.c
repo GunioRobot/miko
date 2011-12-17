@@ -21,7 +21,7 @@ struct handler_function {
 };
 struct handler_function handlers[INTERRUPT_HANDLER_NUM];
 
-	
+
 /////////////////////////////////////////////////
 // private functions
 /////////////////////////////////////////////////
@@ -114,7 +114,7 @@ void setup_inir(void)
  * Interrupt service routine.
  * @param regs is register.
  */
-void isr_handler(u_int32_t int_no, struct registers regs) 
+void isr_handler(u_int32_t int_no, struct registers regs)
 {
 	if (handlers[int_no].func != NULL)
 		handlers[int_no].func(&regs);
@@ -124,11 +124,11 @@ void isr_handler(u_int32_t int_no, struct registers regs)
  * IRQ interrupt  routine.
  * @param regs is register.
  */
-void irq_handler(u_int32_t int_no, struct registers regs) 
+void irq_handler(u_int32_t int_no, struct registers regs)
 {
 	if (int_no >= 40)
 		outb(0xA0, 0x20);
-       
+
 	outb(0x20, 0x20);
 
 	if (handlers[int_no].func != NULL)
@@ -146,9 +146,9 @@ inline void set_handler_func(int idx, void (*f)(struct registers *regs))
 
 void software_interrupt_handler(u_int32_t int_no, struct registers regs)
 {
-	if (int_no < NR_SYSCALLS) 
+	if (int_no < NR_SYSCALLS)
 		syscalls[int_no].f(&regs);
-	else 
+	else
 		printk("unknown syscall number 0x%lx\n", int_no);
 
 }

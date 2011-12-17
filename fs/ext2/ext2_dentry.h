@@ -25,7 +25,7 @@ struct ext2_dentry {
 
 // hash versions.
 enum {
-	DX_HASH_LEGACY = 0, 
+	DX_HASH_LEGACY = 0,
 	DX_HASH_HALF_MD4,
 	DX_HASH_TEA,
 };
@@ -40,4 +40,4 @@ struct ext2_indexed_entry_count_and_limit {
 	u_int16_t count;
 };
 
-#endif // __MIKOOS_EXT2_DENTRY_H 
+#endif // __MIKOOS_EXT2_DENTRY_H

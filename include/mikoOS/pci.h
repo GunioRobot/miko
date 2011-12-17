@@ -23,7 +23,7 @@ struct pci_device {
 	u_int32_t sub_class;	  // sub class.
 	u_int32_t base_class;     // base class.
 
-	// 0x0c 
+	// 0x0c
 	u_int8_t header_type;     // header type.
 	u_int8_t multi;           // multi device.
 

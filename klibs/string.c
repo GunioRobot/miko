@@ -35,10 +35,10 @@ void *memcpy(void *dest, const void *src, size_t n)
  */
 int strcmp(const char *s1, const char *s2)
 {
-	for ( ; *s1 == *s2; s1++, s2++) 
+	for ( ; *s1 == *s2; s1++, s2++)
 		if (*s1 == '\0')
 			return 0;
-	
+
 	return *s1 - *s2;
 }
 
@@ -67,7 +67,7 @@ size_t strlen(const char *s)
 {
 	const char *p = s;
 
-	while (*s++) 
+	while (*s++)
 		;
 
 	return s - p;

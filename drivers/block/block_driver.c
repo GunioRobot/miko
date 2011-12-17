@@ -9,7 +9,7 @@ struct blk_device_drivers blk_drivers_head = {
 	.op = NULL,
 	.next = &blk_drivers_head,
 };
-	
+
 /**
  * Regist block driver operation to the list.
  * @param op
@@ -21,7 +21,7 @@ void register_blk_driver(struct blk_dev_driver_operations *op)
 	p = kmalloc(sizeof(*p));
 	if (!p)
 		KERN_ABORT("kmalloc failed");
-	
+
 	p->op = op;
 	p->next = blk_drivers_head.next;
 	blk_drivers_head.next = p;
@@ -61,7 +61,7 @@ void show_all_registered_driver(void)
  * @param name is device driver name.
  * @return non null / null.
  */
-struct blk_device_drivers *get_blk_driver(const char *name) 
+struct blk_device_drivers *get_blk_driver(const char *name)
 {
 	struct blk_device_drivers *p;
 
@@ -79,7 +79,7 @@ struct blk_device_drivers *get_blk_driver(const char *name)
  * @param how much block do you want to read?
  * @return 0 is success.
  */
-int blk_read_sector(const struct blk_device_drivers *blk_driver,  block_data_t *out, 
+int blk_read_sector(const struct blk_device_drivers *blk_driver,  block_data_t *out,
 		unsigned long sector_num, int count)
 {
 	int i;

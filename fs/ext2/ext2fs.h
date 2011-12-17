@@ -51,7 +51,7 @@ enum {
 
 // for s_feature_compat.
 #define EXT2_FEATURE_COMPAT_DIR_PREALLOC 0x0001 // Block pre-allocation for new directories
-#define EXT2_FEATURE_COMPAT_IMAGIC_INODES 0x0002 
+#define EXT2_FEATURE_COMPAT_IMAGIC_INODES 0x0002
 #define EXT3_FEATURE_COMPAT_HAS_JOURNAL 0x0004 // An Ext3 journal exists
 #define EXT2_FEATURE_COMPAT_EXT_ATTR 0x0008 // Extended inode attributes are present
 #define EXT2_FEATURE_COMPAT_RESIZE_INO 0x0010 // Non-standard inode size used

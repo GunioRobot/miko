@@ -4,7 +4,7 @@ create_cmd=""
 target=$1
 test_img="test/img/hda.img"
 
-function remove_old_file() 
+function remove_old_file()
 {
     if [ -f $test_img ]; then
 	echo "Remove $test_img"
@@ -28,7 +28,7 @@ elif [ "$target" = "bochs" ]; then
     cmd="$create_cmd -q -hd -size=10 -mode=flat $test_img"
 else
     create_cmd="/bin/dd"
-    cmd="$create_cmd if=/dev/zero of=$test_img bs=1M count=10"    
+    cmd="$create_cmd if=/dev/zero of=$test_img bs=1M count=10"
 fi
 
 remove_old_file

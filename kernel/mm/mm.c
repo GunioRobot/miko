@@ -4,7 +4,7 @@
 #include <mikoOS/interrupt.h>
 
 // This should be page aligned.
-pgd_t page_directory[PGD_SIZE] __attribute__((aligned(0x1000))); 
+pgd_t page_directory[PGD_SIZE] __attribute__((aligned(0x1000)));
 pte_t pte[PTE_SIZE];
 
 /////////////////////////////////////////////////
@@ -17,15 +17,15 @@ static void page_fault(struct registers *regs);
  */
 static void setup_pte(void)
 {
-	unsigned long address = 0; 
+	unsigned long address = 0;
 	int i;
 
 	page_directory[0] = (pgd_t) &pte | PAGE_PRESENT | PAGE_RW;
 
 	for(i = 0; i < PTE_SIZE; i++) {
 		// PAGE is present and readable/writable.
-		pte[i] = address | PAGE_PRESENT | PAGE_RW; 
-		address = address + PAGE_SIZE; 
+		pte[i] = address | PAGE_PRESENT | PAGE_RW;
+		address = address + PAGE_SIZE;
 	}
 
 	// Address 0 is reserved.
@@ -118,7 +118,7 @@ u_int32_t get_free_pages(u_int32_t pages)
 			enough = 0;
 		}
 		current_idx++;
-	} 
+	}
 	return found ? ret : 0;
 }
 

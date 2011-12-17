@@ -63,7 +63,7 @@ void *kmalloc(size_t size)
 	if (size > KMALLOC_MAX_SIZE)
 		return NULL;
 
-	// Ceilling 
+	// Ceilling
 	size = (size + sizeof(struct kmalloc_header) + KMALLOC_ALIGN - 1) & -KMALLOC_ALIGN;
 
 //	printk("header size = %d : kmalloc size = %d\n", sizeof(struct kmalloc_header), size);
@@ -81,20 +81,20 @@ void *kmalloc(size_t size)
 
 			p->size = size;
 #if 0
-			printk("free size is %d : alloc address is 0x%x : next_free_area->prev is 0x%x, prev->prev is 0x%x\n", 
-			       next_free_area->size, p, 
-			       next_free_area->prev, 
+			printk("free size is %d : alloc address is 0x%x : next_free_area->prev is 0x%x, prev->prev is 0x%x\n",
+			       next_free_area->size, p,
+			       next_free_area->prev,
 			       ((struct kmalloc_header *) next_free_area->prev)->prev);
 #endif
 			ret = (void *) ((char *) p + sizeof(struct kmalloc_header));
 			break;
-		} 
+		}
 #if 0
-		else 
-			printk("next_free_area->size is %d. so not enough size to allocate %d byte(0x%x)\n", next_free_area->size, size, p); 
+		else
+			printk("next_free_area->size is %d. so not enough size to allocate %d byte(0x%x)\n", next_free_area->size, size, p);
 #endif
 		if (p->prev & KMALLOC_USED) {
-			while (p->prev & KMALLOC_USED) 
+			while (p->prev & KMALLOC_USED)
 				p = (struct kmalloc_header *) (p->prev ^ KMALLOC_USED);
 		} else {
 			p = (struct kmalloc_header *) p->prev;
@@ -112,7 +112,7 @@ void *kmalloc(size_t size)
  */
 void kfree(void *ptr)
 {
-	unsigned long addr = 0; 
+	unsigned long addr = 0;
 	struct kmalloc_header *p, *prev;
 	struct kmalloc_header *tmp;
 	u_int32_t new_size = 0;
@@ -145,7 +145,7 @@ void kfree(void *ptr)
 				next_free_area = prev;
 				next_free_area->size = new_size;
 			}
-					
+
 			break;
 		}
 

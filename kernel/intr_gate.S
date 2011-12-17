@@ -1,6 +1,6 @@
 .code32
 .align 4
-	
+
 #define isr_gate_stub(num) \
 .globl isr_gate##num		;\
 isr_gate##num: 			;\
@@ -13,7 +13,7 @@ isr_gate##num: 			;\
 	popal			;\
 	sti			;\
 	iret
-	
+
 #define irq_gate_stub(num_a,num_b) \
 .globl irq_gate##num_a 		;\
 irq_gate##num_a: 		;\
@@ -38,7 +38,7 @@ soft_intr_handler:
 	popal
 	sti
 	iret
-	
+
 isr_gate_stub(0)
 isr_gate_stub(1)
 isr_gate_stub(2)
@@ -87,4 +87,3 @@ irq_gate_stub(12,44)
 irq_gate_stub(13,45)
 irq_gate_stub(14,46)
 irq_gate_stub(15,47)
-	

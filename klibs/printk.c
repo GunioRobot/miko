@@ -34,10 +34,10 @@ static void kputc(int c)
 			ypos = 0;
 		return;
 	}
-	
+
 	*(video + (xpos + ypos * COLUMNS) * 2) = c & 0xFF;
 	*(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;
-	
+
 	xpos++;
 	if (xpos >= COLUMNS)
 		goto newline;
@@ -64,12 +64,12 @@ static void kputs(char *s)
 void cls(void)
 {
 	int i;
-	
+
 	video = (unsigned char *) VRAM;
-	
+
 	for (i = 0; i < COLUMNS * LINES * 2; i++)
 		*(video + i) = 0;
-	
+
 	xpos = 0;
 	ypos = 0;
 }
@@ -79,7 +79,7 @@ void cls(void)
  * @param fmt as format strings.
  * @param arguments for format strings.
  */
-void printk(char *fmt, ...) 
+void printk(char *fmt, ...)
 {
         va_list ap;
         int ival;

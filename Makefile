@@ -46,10 +46,10 @@ objs = $(boot_dir)/head.o \
 	$(klib_dir)/string.o \
 	$(klib_dir)/kmalloc.o \
 	$(klib_dir)/stdlib.o \
-	$(klib_dir)/abort.o 
+	$(klib_dir)/abort.o
 
 all: build $(objs)
-	$(LD) $(LDFLAGS) $(objs) -o $(kernel) 
+	$(LD) $(LDFLAGS) $(objs) -o $(kernel)
 
 build:
 	cd $(boot_dir) && make
@@ -82,13 +82,13 @@ qemu_test:
 create_test_data:
 	sudo mount test/img/hda.img /media/test -o loop
 	mkdir -p /media/test/dir_a/dir_b /media/test/dir_A/dir_B
-	echo "foobar" > /media/test/dir_a/dir_b/foobar.txt 
+	echo "foobar" > /media/test/dir_a/dir_b/foobar.txt
 	echo "ABCDE" > /media/test/test.txt
 	cd test/test_program/ && make && cp hello /media/test/.
-	sudo umount /media/test 
+	sudo umount /media/test
 
 clean:
-	cd $(boot_dir) && make clean 
+	cd $(boot_dir) && make clean
 	cd $(init_dir) && make clean
 	cd $(kern_dir) && make clean
 	cd $(kern_mm_dir) && make clean
@@ -100,6 +100,6 @@ clean:
 	cd $(klib_dir) && make clean
 	cd test/test_program && make clean
 	-rm -f $(kernel) *.log
-	find . -name '*~' -exec rm {} \; 
+	find . -name '*~' -exec rm {} \;
 
 .PHONY: clean all install test

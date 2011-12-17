@@ -67,7 +67,7 @@ static void free_section(struct section *section)
 {
 	if (!section)
 		return ;
-	if (section->data) 
+	if (section->data)
 		kfree(section->data);
 	section->size = 0;
 	kfree(section);
@@ -94,7 +94,7 @@ UNUSED static void free_elf_data(struct elf *data)
 		kfree(data->rel);
 	if (data->rela)
 		kfree(data->rela);
-	
+
 	free_string_tables(&data->str_table);
 	free_sections(&data->section_data);
 
@@ -107,7 +107,7 @@ static const Elf32_Shdr *get_section_header(const struct elf *data, const char *
 	const Elf32_Shdr *sym = NULL;
 	unsigned char *str_tbl = data->str_table.string_tbl;
 	int i;
-	
+
 	for (i = 0; i < data->e_hdr.e_shnum; i++) {
 		const Elf32_Shdr *p = data->s_hdr + i;
 		char buf[64] = { 0 };
@@ -136,17 +136,17 @@ static inline unsigned long get_section_size(const struct elf *data)
 static int read_section_header(struct elf *data, const unsigned char *file)
 {
 	unsigned long section_size = get_section_size(data);
-	
+
 	// Is there any section header?
 	if (!data->e_hdr.e_shnum)
 		return 1;
-	
+
 	data->s_hdr = kmalloc(section_size);
 	if (!data->s_hdr)
 		return -1;
-	
+
 	memcpy(data->s_hdr, file + data->e_hdr.e_shoff, section_size);
-	
+
 	return 0;
 }
 
@@ -199,13 +199,13 @@ static int read_program_header(struct elf *data, const unsigned char *file)
 	// Is there program header.
 	if (!data->e_hdr.e_phnum)
 		return 1;
-	
+
 	data->p_hdr = kmalloc(size);
 	if (!data->p_hdr)
 		return -1;
-	
+
 	memcpy(data->p_hdr, file + data->e_hdr.e_phoff, size);
-	
+
 	return 0;
 }
 
@@ -236,7 +236,7 @@ static int read_symbol_string_table(struct elf *data, const unsigned char *file)
 
 	memcpy(data->str_table.symbol_str_tbl, file + sym->sh_offset, sym->sh_size);
 	return 0;
-	
+
 }
 
 
@@ -247,14 +247,14 @@ static int is_elf(const struct elf *data)
 		data->e_hdr.e_ident[2] == 'L' &&
 		data->e_hdr.e_ident[3] == 'F')
 		return 1;
-		
+
 	return 0;
 }
 
 static int read_header(struct elf *data, const unsigned char *file)
 {
 	memcpy(&data->e_hdr, file, sizeof(data->e_hdr));
-	
+
 	return is_elf(data) == 1 ? 0 : -1;
 }
 
@@ -264,12 +264,12 @@ static int read_symbol_table(struct elf *data, const unsigned char *file)
 
 	if (!sym)
 		return -2;
-	
+
 	data->sym = kmalloc(sym->sh_size);
 	if (!data->sym)
 		return -1;
 
-	memcpy(data->sym, file + sym->sh_offset, sym->sh_size);	
+	memcpy(data->sym, file + sym->sh_offset, sym->sh_size);
 	data->sym_count = sym->sh_size / sizeof(Elf32_Sym);
 
 	return 0;
@@ -285,7 +285,7 @@ UNUSED static void get_symbol_string_name(const Elf32_Sym *data, const unsigned 
 	strcpy(buf, (const char *) table + data->st_name);
 }
 
-#ifdef MIKO_ELF_DEBUG 
+#ifdef MIKO_ELF_DEBUG
 
 static void print_symbol_table(const struct elf *data, const unsigned char *file);
 static void print_section_header(const struct elf *data, const unsigned char *file);
@@ -332,12 +332,12 @@ static void print_symbol_table(const struct elf *data, const unsigned char *file
 	int i;
 	const Elf32_Sym *p;
 	unsigned char *sym_str_tbl = data->str_table.symbol_str_tbl;
-	
+
 	for (i = 0; i < data->sym_count; i++) {
 		p = data->sym + i;
 		char buf[128] = { 0 };
 		get_symbol_string_name(p, sym_str_tbl, buf);
-		printk("[-------Symbol Table %d-------]\nst_name: %s\nst_value: 0x%x\n" 
+		printk("[-------Symbol Table %d-------]\nst_name: %s\nst_value: 0x%x\n"
 		       "st_size: 0x%x\nst_info: 0x%x\nst_other: 0x%x\nst_shndx: 0x%x\n",
 		       i, buf, p->st_value,
 		       p->st_size, p->st_info, p->st_other,
@@ -354,7 +354,7 @@ static void print_section_header(const struct elf *data, const unsigned char *fi
 	printk("[-------Section Header-------]\nn:sh_name:sh_type:sh_flags:"
 	       "sh_addr:sh_offset:sh_size:sh_link:"
 	       "sh_info:sh_addralign:sh_entsize\n");
-	       
+
 	for (i = 0; i < data->e_hdr.e_shnum; i++) {
 		const Elf32_Shdr *p = data->s_hdr + i;
 		char buf[64] = { 0 };
@@ -362,7 +362,7 @@ static void print_section_header(const struct elf *data, const unsigned char *fi
 		printk("%d:%s:0x%x:0x%x:"
 		       "0x%x:0x%x:0x%x:0x%x:"
 		       "0x%x:0x%x:0x%x\n",
-		       i, buf, p->sh_type, p->sh_flags, 
+		       i, buf, p->sh_type, p->sh_flags,
 		       p->sh_addr, p->sh_offset, p->sh_size,
 		       p->sh_link, p->sh_info, p->sh_addralign,
 		       p->sh_entsize);
@@ -373,11 +373,11 @@ static void print_section_header(const struct elf *data, const unsigned char *fi
 static void print_program_header(const struct elf *data)
 {
 	int i;
-	
+
 	for (i = 0; i < data->e_hdr.e_phnum; i++) {
 		const Elf32_Phdr *p = data->p_hdr + i;
 		printk("[-------Program Header %d-------]\np_type: 0x%x\np_offset: 0x%x\n"
-		       "p_vaddr: 0x%x\np_paddr: 0x%x\np_memsz: 0x%x\np_flags: 0x%x\np_align: 0x%x\n", 
+		       "p_vaddr: 0x%x\np_paddr: 0x%x\np_memsz: 0x%x\np_flags: 0x%x\np_align: 0x%x\n",
 			i, p->p_type, p->p_offset, p->p_vaddr,
 			p->p_paddr, p->p_memsz, p->p_flags, p->p_align);
 	}
@@ -390,7 +390,7 @@ static void print_header(const struct elf *data)
 	printk("EI_DATA: 0x%x\n", data->e_hdr.e_ident[5]);
 	printk("EI_VERSION: 0x%x\n", data->e_hdr.e_ident[6]);
 	printk("EI_OSABI: 0x%x\n", data->e_hdr.e_ident[7]);
-	
+
 	printk("e_type: 0x%x\n", data->e_hdr.e_type);
 	printk("e_machine: 0x%x\n", data->e_hdr.e_machine);
 	printk("e_version: 0x%x\n", data->e_hdr.e_version);
@@ -434,7 +434,7 @@ struct elf *init_elf_data(void)
 int execute_elf(const unsigned char *file)
 {
 	struct elf *data;
-	
+
 	printk("%s\n", __FUNCTION__);
 
 	data = init_elf_data();
@@ -446,21 +446,21 @@ int execute_elf(const unsigned char *file)
 		return -1;
 	}
 
-	
+
 	read_program_header(data, file);
 
 	read_section_header(data, file);
 	read_string_table(data, file);
-		
+
 	read_symbol_table(data, file);
 	read_symbol_string_table(data, file);
 
 	read_text_section(data, file);
-	
+
 	read_bss_section(data, file);
 
 	setup_tss(data->section_data.text->data);
 //	free_elf_data(data);
-	
+
 	return 0;
 }

@@ -29,9 +29,9 @@ static u_int32_t max_logical_sector_num = 0;
 // driver operations.
 static int open_ATA_disk(void);
 static int close_ATA_disk(void);
-static int read_sector(int device, u_int32_t sector, 
+static int read_sector(int device, u_int32_t sector,
 		       sector_t *buf,	size_t buf_size);
-static int write_sector(int device, u_int32_t sector, 
+static int write_sector(int device, u_int32_t sector,
 			sector_t *buf,	size_t buf_size);
 
 // For find IDE interface.
@@ -97,7 +97,7 @@ static void sector_rw_test(void)
 //	buf[0] = 0x6261;
 //	buf[1] = 0x6463;
 //	buf[2] = 0xa065;
-	
+
 //	write_sector(0, 222, buf, sizeof(buf) / sizeof(buf[0]));
 
 	memset(block.sector, 0x0, sizeof(block.sector));
@@ -148,7 +148,7 @@ static int close_ATA_disk(void)
  * @param data size. it should be 256.
  * @return negative if fail to write data.
  */
-int write_sector(int device, u_int32_t sector, 
+int write_sector(int device, u_int32_t sector,
 		  sector_t *buf, size_t buf_size)
 {
 	bool ret;
@@ -160,7 +160,7 @@ int write_sector(int device, u_int32_t sector,
 
 	finish_sector_rw();
 
-	for (i = 0; i < buf_size; i++) 
+	for (i = 0; i < buf_size; i++)
 		outw(DATA_REGISTER, buf[i]);
 
 	return 0;
@@ -174,7 +174,7 @@ int write_sector(int device, u_int32_t sector,
  * @param data size. it should be 256.
  * @return  0 if process is success. if something wrong it returns negative value
  */
-int read_sector(int device, u_int32_t sector, 
+int read_sector(int device, u_int32_t sector,
 		 sector_t *buf, size_t buf_size)
 {
 	bool ret;
@@ -184,7 +184,7 @@ int read_sector(int device, u_int32_t sector,
 		printk("buf_size isn't 256\n");
 		while (1);
 	}
-		
+
 	ret = sector_rw_common(PIO_SECTOR_READ_CMD, device, sector);
 	if (!ret)
 		return -1;
@@ -418,7 +418,7 @@ static bool is_device_fault(void)
 	u_int8_t data;
 
 	data = inb(STATUS_REGISTER);
-	
+
 	return (data >> 5 & 0x01) == 1 ? true : false;
 }
 
@@ -499,7 +499,7 @@ read_status_register_again:
 		print_error_register(device);
 		return false;
 	}
-	
+
 	if (!is_drq_active(status)) {
 		if (loop > 5) {
 			printk("DRQ didn't be active\n");
@@ -568,7 +568,7 @@ static bool do_identify_device(int device, sector_t *buf)
 
 		for (i = 0; i < 256; i++)
 			buf[i] = inw(DATA_REGISTER);
-	} 
+	}
 
 	return true;
 
@@ -583,11 +583,11 @@ static void do_soft_reset(int device)
 	// Initialize master/slave.
 	set_device_number(device);
 
-	// Do DEVICE RESET command. 
+	// Do DEVICE RESET command.
 	write_command(0x08);
 
 	// Wait sometime after DEVICE RESET.
-	wait_loop_usec(5);	
+	wait_loop_usec(5);
 }
 
 // It represents device type.
@@ -655,7 +655,7 @@ static bool initialize_common(int device)
 	}
 
 	max_logical_sector_num = ((u_int32_t) buf[61] << 16) | buf[60];
-	
+
 	return true;
 }
 
@@ -685,7 +685,7 @@ bool init_ata_disk_driver(void)
 {
 	if (!find_ata_device())
 		return false;
-	
+
 	set_bus_master_bit();
 
 	get_base_address();
